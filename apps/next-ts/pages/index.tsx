@@ -1,15 +1,12 @@
 import { countAtom } from "@/lib/jotai";
 import { useAtom } from "jotai";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import Dropzone from "@/components/Dropzone";
-import CreateAndViewAsset from "@/components/CreateAndViewAsset";
+import {CreateAndViewAsset} from "@/components/CreateAndViewAsset";
 
 export default function Home() {
   const [count, setCount] = useAtom(countAtom);
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div>{count}</div>
-      <Dropzone/>
       <CreateAndViewAsset/>
       {/*<Stream />*/}
       <ConnectButton />

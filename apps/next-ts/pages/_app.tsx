@@ -10,7 +10,6 @@ import {
   studioProvider,
 } from "@livepeer/react";
 
-console.log(process.env.NEXT_PUBLIC_STUDIO_API_KEY)
 const livepeerClient = createReactClient({
   provider: studioProvider({
     apiKey: process.env.NEXT_PUBLIC_STUDIO_API_KEY,
