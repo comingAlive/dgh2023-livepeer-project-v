@@ -5,10 +5,18 @@ import Header from "@/components/Header";
 import { Inter } from "next/font/google";
 
 import {
-  LivepeerConfig,
   createReactClient,
+  LivepeerConfig,
   studioProvider,
 } from "@livepeer/react";
+import "@rainbow-me/rainbowkit/styles.css";
+import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { configureChains, createClient, WagmiConfig } from "wagmi";
+import { arbitrum, mainnet, optimism, polygon } from "wagmi/chains";
+import { alchemyProvider } from "wagmi/providers/alchemy";
+import { publicProvider } from "wagmi/providers/public";
+import { AnimatePresence } from "framer-motion";
+import { useRouter } from "next/router";
 
 const livepeerClient = createReactClient({
   provider: studioProvider({
@@ -17,14 +25,6 @@ const livepeerClient = createReactClient({
 });
 
 const inter = Inter({ subsets: ["latin"] });
-
-import "@rainbow-me/rainbowkit/styles.css";
-import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { configureChains, createClient, WagmiConfig } from "wagmi";
-import { mainnet, polygon, optimism, arbitrum } from "wagmi/chains";
-import { alchemyProvider } from "wagmi/providers/alchemy";
-import { publicProvider } from "wagmi/providers/public";
-import { AnimatePresence } from "framer-motion";
 
 const { chains, provider } = configureChains(
   [mainnet, polygon, optimism, arbitrum],
@@ -44,6 +44,7 @@ const wagmiClient = createClient({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
+  const router = useRouter();
   return (
     <div className={inter.className}>
       <LivepeerConfig client={livepeerClient}>
@@ -51,7 +52,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <WagmiConfig client={wagmiClient}>
             <RainbowKitProvider chains={chains}>
               <AnimatePresence mode="wait" initial={false}>
-                <Header />
+                {router.asPath === "/" && <Header />}
                 <Component {...pageProps} />
               </AnimatePresence>
             </RainbowKitProvider>

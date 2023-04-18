@@ -1,10 +1,11 @@
 import { motion, useIsPresent } from "framer-motion";
 import Link from "next/link";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import RecsGallery from "@/components/RecsGallery";
 export default function Home() {
   const isPresent = useIsPresent();
   return (
     <article>
+      {/*<Header />*/}
       <h1
         className="pt-20 tracking-[-0.9vw]"
         style={
@@ -33,6 +34,7 @@ export default function Home() {
         style={{ originX: isPresent ? 0 : 1 }}
         className="privacy-screen"
       />
+      <RecsGallery/>
     </article>
   );
 }

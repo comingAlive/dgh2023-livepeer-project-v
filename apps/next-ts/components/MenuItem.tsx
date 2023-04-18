@@ -21,26 +21,23 @@ const variants = {
 
 const colors = ["#FF008C", "#D309E1", "#9C1AFF", "#7700FF", "#4400FF"];
 
-export const MenuItem = ({ i }) => {
+export const MenuItem = ({ name, i }) => {
   const style = { border: `2px solid ${colors[i]}` };
-  return i > 1 ? (
+  return (
     <motion.li
       className={styles.li}
       variants={variants}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
     >
-      <div className={styles.iconPlaceholder} style={style} />
-      <div className={styles.textPlaceholder} style={style} />
-    </motion.li>
-  ) : (
-    <motion.li
-      variants={variants}
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.95 }}
-      className={styles.li}
-    >
-      Upload
+      {name ? (
+        name
+      ) : (
+        <>
+          <div className={styles.iconPlaceholder} style={style} />
+          <div className={styles.textPlaceholder} style={style} />
+        </>
+      )}
     </motion.li>
   );
 };
