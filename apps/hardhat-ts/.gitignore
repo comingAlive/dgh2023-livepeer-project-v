@@ -1,0 +1,6 @@
+# hardhat
+.env
+cache
+artifacts
+.swc
+typechain

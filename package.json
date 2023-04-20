@@ -5,6 +5,8 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "fork": "cd apps/hardhat-ts && pnpm fork",
+    "d": "cd apps/hardhat-ts && pnpm d",
     "lint": "turbo run lint"
   },
   "devDependencies": {

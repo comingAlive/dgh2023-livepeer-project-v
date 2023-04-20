@@ -1,20 +1,15 @@
 import { motion, useIsPresent, useScroll, useSpring } from "framer-motion";
-import { Image } from "./Image";
+import { Video } from "./Video";
 import Link from "next/link"
-
-export interface PhotoMetadata {
-  aspectRatio: string;
-}
 
 interface Props {
   alt: string;
-  category: string;
   title: string;
   titleWidth: number;
-  photos: PhotoMetadata[];
+  videos: any[];
 }
 
-export function Gallery({ category, alt, title, titleWidth, photos }: Props) {
+export function Gallery({ alt, title, titleWidth, videos }: Props) {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -25,16 +20,18 @@ export function Gallery({ category, alt, title, titleWidth, photos }: Props) {
 
   return (
     <article>
+      <button className="btn btn-outline z-10 sticky top-20 left-20">Upload</button>
       <h1 style={{ "--base-width": `${titleWidth}vw`, x: "-50%" } as any}>
         {title}
       </h1>
-      {photos.map(({ aspectRatio }, index) => (
-        <Image
-          category={category}
+      {videos.map(({name, playbackId}, index) => (
+        <Video
+          name={name}
+          playbackId={playbackId}
           index={index + 1}
           alt={alt}
           key={index}
-          aspectRatio={aspectRatio}
+          aspectRatio={"1.78"}
         />
       ))}
       <motion.div className="progress" style={{ scaleX }} />

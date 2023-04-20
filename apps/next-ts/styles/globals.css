@@ -27,7 +27,7 @@ body {
 
   margin: 0;
   background-color: var(--background);
-  color: var(--accent);
+  color: var(--black);
   padding: 0 0 100px;
   overflow-x: hidden;
 }

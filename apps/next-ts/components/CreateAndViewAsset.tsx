@@ -74,6 +74,7 @@ const CreateAndViewAsset = () => {
 
   return (
     <div>
+      <pre>{JSON.stringify(asset, null, 4)}</pre>
       {!asset && (
         <div {...getRootProps()}>
           <input {...getInputProps()} />
@@ -84,7 +85,7 @@ const CreateAndViewAsset = () => {
       )}
 
       {asset?.[0]?.playbackId && (
-        <Player accessKey="123" title={asset[0].name} playbackId={asset[0].playbackId} />
+        <Player accessKey="123" title={"file_example_MP4_480_1_5MG.mp4"} playbackId={"0711aduvqnvwmm52"} />
       )}
 
       <div>

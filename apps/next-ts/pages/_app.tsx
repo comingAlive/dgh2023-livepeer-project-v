@@ -57,13 +57,9 @@ export default function App({ Component, pageProps }: AppProps) {
             <RainbowKitProvider chains={chains}>
               <ThemeProvider defaultTheme="system">
                 <AnimatePresence mode="wait" initial={false}>
+                  {/*<Header/>*/}
                   {router.asPath === "/" && <Header />}
-                  <DevSupport
-                    ComponentPreviews={ComponentPreviews}
-                    useInitialHook={useInitial}
-                  >
-                    <Component {...pageProps} />
-                  </DevSupport>
+                  <Component {...pageProps} />
                 </AnimatePresence>
               </ThemeProvider>
             </RainbowKitProvider>
