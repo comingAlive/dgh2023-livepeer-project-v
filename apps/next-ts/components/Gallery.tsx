@@ -33,6 +33,7 @@ export function Gallery({ category, alt, title, titleWidth, photos }: Props) {
           category={category}
           index={index + 1}
           alt={alt}
+          key={index}
           aspectRatio={aspectRatio}
         />
       ))}

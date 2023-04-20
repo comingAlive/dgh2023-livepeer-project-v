@@ -33,13 +33,13 @@ body {
 }
 
 
-ul,
-li {
+.ul,
+.li {
   padding: 0;
   margin: 0;
 }
 
-ul {
+.ul {
   width: 100%;
   padding-top: 25vw;
   justify-content: center;
@@ -49,7 +49,7 @@ ul {
   list-style: none;
 }
 
-li {
+.li {
   font-size: 2rem;
   margin-bottom: 1.6rem;
 }
@@ -171,7 +171,7 @@ section > div {
   background: var(--ash-black);
 }
 
-img {
+.img {
   position: absolute;
   top: 0;
   left: 0;
@@ -211,7 +211,8 @@ img {
 .switch {
   width: 80px;
   height: 50px;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(155, 155, 155, 0.4);
+  /*background-color: rgba(255, 255, 255, 0.4);*/
   display: flex;
   justify-content: flex-start;
   border-radius: 25px;

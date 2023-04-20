@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Example } from "@/components/Example";
+import { useTheme } from "next-themes";
 
 const Header = () => {
   const [isOn, setIsOn] = useState(false);
@@ -11,6 +12,9 @@ const Header = () => {
     stiffness: 700,
     damping: 30,
   };
+
+  const { theme, setTheme } = useTheme();
+
   const toggleSwitch = () => setIsOn(!isOn);
 
   return (
@@ -18,9 +22,12 @@ const Header = () => {
       <div className="flex items-center gap-4">
         <Example />
         <div
-          className="switch ml-8 mt-8"
+          className="switch ml-80 mt-8"
           data-isOn={isOn}
-          onClick={toggleSwitch}
+          onClick={() => {
+            toggleSwitch();
+            setTheme(theme === "dark" ? "light" : "dark");
+          }}
         >
           <motion.div className="handle" layout transition={spring} />
         </div>

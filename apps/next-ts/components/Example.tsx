@@ -32,7 +32,7 @@ export const Example = () => {
   const { height } = useDimensions(containerRef);
 
   return (
-    <div >
+    <div className="z-10">
       <motion.nav
         className={styles.nav}
         initial={false}

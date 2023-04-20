@@ -17,6 +17,9 @@ import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
+import { DevSupport } from "@react-buddy/ide-toolbox-next";
+import { ComponentPreviews, useInitial } from "@/components/dev";
+import { ThemeProvider } from "next-themes";
 
 const livepeerClient = createReactClient({
   provider: studioProvider({
@@ -45,16 +48,24 @@ const wagmiClient = createClient({
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
+
   return (
     <div className={inter.className}>
       <LivepeerConfig client={livepeerClient}>
         <Provider>
           <WagmiConfig client={wagmiClient}>
             <RainbowKitProvider chains={chains}>
-              <AnimatePresence mode="wait" initial={false}>
-                {router.asPath === "/" && <Header />}
-                <Component {...pageProps} />
-              </AnimatePresence>
+              <ThemeProvider defaultTheme="system">
+                <AnimatePresence mode="wait" initial={false}>
+                  {router.asPath === "/" && <Header />}
+                  <DevSupport
+                    ComponentPreviews={ComponentPreviews}
+                    useInitialHook={useInitial}
+                  >
+                    <Component {...pageProps} />
+                  </DevSupport>
+                </AnimatePresence>
+              </ThemeProvider>
             </RainbowKitProvider>
           </WagmiConfig>
         </Provider>
