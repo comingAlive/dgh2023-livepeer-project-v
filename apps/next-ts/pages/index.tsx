@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import fetchMyTokenBalance from "@/lib/fetchMyTokenBalance";
+import { supabase } from "@/lib/supabaseClient";
 
 const Card = ({
   title,
@@ -15,11 +16,38 @@ const Card = ({
   imageSrc,
   isJoined = false,
   joinFunc,
+  i,
 }) => {
   const [selectedCard, selectCard] = useAtom(selectedCardAtom);
 
   const router = useRouter();
   const isSelected = selectedCard === title;
+
+  const [dateP, setDateP] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  useEffect(() => {
+    const getData = async () => {
+      const r = await supabase.from("daomotion_daoexample_videos").select();
+      if (r.data.at(0) && i === 0) {
+        setDateP(r.data[0]["created_at"]);
+        setLastName(r.data[0]["name"]);
+      }
+    };
+
+    if (!dateP) {
+      getData();
+    }
+  }, []);
+
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+  };
 
   return (
     <div
@@ -33,7 +61,7 @@ const Card = ({
       <div className="card-body">
         <h3>{title}</h3>
         <h3 className="card-title">Last Video:</h3>
-        <p>{desc}</p>
+        <p>{lastName.split(".")[0] || desc}</p>
         <div className="justify-end card-actions">
           {isJoined && (
             <button
@@ -53,7 +81,24 @@ const Card = ({
             {isJoined ? "Joined" : "Join"}
           </button>
         </div>
-        <div>Date: {date === "" ? "-" : date}</div>
+        {dateP && i === 0 && (
+          <div>
+            Date:{" "}
+            <span className="text-sm">
+              {" "}
+              {new Date(dateP).toLocaleString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                second: "numeric",
+              })}
+            </span>
+          </div>
+        )}
+        {!dateP && i === 0 && <div>Date: {date === "" ? "-" : date}</div>}
+        {i > 0 && <div>Date: {date === "" ? "-" : date}</div>}
       </div>
     </div>
   );
@@ -68,7 +113,7 @@ export default function Home() {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const contract = new ethers.Contract(
-      "0x4D5D3FaE9b08a4FA2aEB9Bc0d86E3dB3b3126438",
+      process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
       [
         "function mint(uint256 amount) public",
         "function balanceOf(address owner) public view returns (uint256)",
@@ -79,15 +124,25 @@ export default function Home() {
     await tx.wait();
     const balance = await contract.balanceOf(signer.getAddress());
     console.log("Minted 1 tokens. Balance: " + balance);
+
+    fetchMyTokenBalance().then((balance) => {
+      if (Number(balance) > 0) {
+        setIsJoinedDaoExample(true);
+      }
+    });
   };
 
   const [isJoinedDaoExample, setIsJoinedDaoExample] = useState(false);
 
   useEffect(() => {
-    fetchMyTokenBalance().then((balance) => {
-      if (Number(balance) > 0) {
-        setIsJoinedDaoExample(true);
-      }
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    provider.listAccounts().then((v) => {
+      v.length &&
+        fetchMyTokenBalance().then((balance) => {
+          if (Number(balance) > 0) {
+            setIsJoinedDaoExample(true);
+          }
+        });
     });
   }, []);
 
@@ -152,7 +207,7 @@ export default function Home() {
           onClick={() => setIsShowAll(false)}
           className={`btn ${isShowAll ? "btn-outline" : "btn-active"} `}
         >
-          Only joined
+          joined
         </button>
         <button
           onClick={() => setIsShowAll(true)}
@@ -170,6 +225,7 @@ export default function Home() {
                 isJoined={c.isJoined}
                 joinFunc={mint}
                 key={c.title + i}
+                i={i}
                 {...c}
               />
             );

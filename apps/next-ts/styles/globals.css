@@ -30,6 +30,7 @@ body {
   color: var(--black);
   padding: 0 0 100px;
   overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 

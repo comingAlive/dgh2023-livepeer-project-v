@@ -4,7 +4,7 @@ const fetchMyTokenBalance = async () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
   const contract = new ethers.Contract(
-    "0x4D5D3FaE9b08a4FA2aEB9Bc0d86E3dB3b3126438",
+    process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
     [
       "function mint(uint256 amount) public",
       "function balanceOf(address owner) public view returns (uint256)",

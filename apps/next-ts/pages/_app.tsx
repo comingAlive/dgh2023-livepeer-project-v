@@ -17,8 +17,6 @@ import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
-import { DevSupport } from "@react-buddy/ide-toolbox-next";
-import { ComponentPreviews, useInitial } from "@/components/dev";
 import { ThemeProvider } from "next-themes";
 
 const livepeerClient = createReactClient({
@@ -55,7 +53,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <Provider>
           <WagmiConfig client={wagmiClient}>
             <RainbowKitProvider chains={chains}>
-              <ThemeProvider defaultTheme="system">
+              <ThemeProvider
+                value={{ light: "cmyk", dark: "business", system: "business" }}
+              >
                 <AnimatePresence mode="wait" initial={false}>
                   {/*<Header/>*/}
                   {router.asPath === "/" && <Header />}

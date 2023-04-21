@@ -85,7 +85,11 @@ const CreateAndViewAsset = () => {
       )}
 
       {asset?.[0]?.playbackId && (
-        <Player accessKey="123" title={"file_example_MP4_480_1_5MG.mp4"} playbackId={"0711aduvqnvwmm52"} />
+        <Player
+          accessKey="123"
+          title={"file_example_MP4_480_1_5MG.mp4"}
+          playbackId={"0711aduvqnvwmm52"}
+        />
       )}
 
       <div>
