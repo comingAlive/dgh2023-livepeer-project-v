@@ -9,6 +9,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@ethersproject/abi": "5.7.0",
+    "@ethersproject/providers": "5.7.2",
     "@livepeer/react": "2.4.2",
     "@rainbow-me/rainbowkit": "0.12.8",
     "@react-buddy/ide-toolbox-next": "^2.4.0",
