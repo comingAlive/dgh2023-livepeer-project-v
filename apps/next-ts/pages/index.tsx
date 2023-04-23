@@ -1,5 +1,6 @@
 import { motion, useIsPresent } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import RecsGallery from "@/components/RecsGallery";
 import { useAtom } from "jotai";
 import { selectedCardAtom } from "@/lib/jotai";
@@ -8,6 +9,12 @@ import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import fetchMyTokenBalance from "@/lib/fetchMyTokenBalance";
 import { supabase } from "@/lib/supabaseClient";
+
+import dao1Png from "../public/daos/dao_1.png";
+import dao2Png from "../public/daos/dao_2.png";
+import dao3Png from "../public/daos/dao_3.png";
+import dao4Png from "../public/daos/dao_4.png";
+import dao5Png from "../public/daos/dao_5.png";
 
 const Card = ({
   title,
@@ -56,7 +63,14 @@ const Card = ({
       }`}
     >
       <figure>
-        <img className="h-56" src={imageSrc} alt="Shoes" />
+        <Image
+          placeholder="blur"
+          className="!h-52"
+          height={10}
+          width={400}
+          src={imageSrc}
+          alt="Shoes"
+        />
       </figure>
       <div className="card-body">
         <h3>{title}</h3>
@@ -151,27 +165,25 @@ export default function Home() {
   const cardsArr = [
     {
       title: "DAO Example",
-      imageSrc:
-        "https://crypto.news/app/uploads/2022/02/Crypto_Enthusiasts_Forming_DAO_to_Buy_Denver_Broncos_NFL_Team.jpg",
+      imageSrc: dao1Png,
       joinFunc: mint,
       isJoined: isJoinedDaoExample,
     },
     {
       title: "DYDX",
-      imageSrc: "https://dydx.exchange/og-image.png",
+      imageSrc: dao2Png,
     },
     {
       title: "AAVE",
-      imageSrc: "https://cryptokopen.nl/wp-content/uploads/2021/03/aave.jpg",
+      imageSrc: dao3Png,
     },
     {
       title: "Arbitrum",
-      imageSrc:
-        "https://www.tbstat.com/wp/uploads/2023/03/20230315_Arbitrum_airdrop-1200x675.jpg",
+      imageSrc: dao4Png,
     },
     {
       title: "Optimism",
-      imageSrc: "https://crypto.news/app/uploads/2022/04/Optimism.jpg",
+      imageSrc: dao5Png,
     },
   ];
 
@@ -216,7 +228,7 @@ export default function Home() {
           Show all
         </button>
       </div>
-      <div className="mt-12 grid grid-cols-4 items-center justify-center px-32">
+      <div className="mt-12 gap-2 grid grid-cols-4 items-center justify-center px-32">
         {cardsArr
           .filter((c) => (isShowAll ? c : c?.isJoined))
           .map((c, i) => {
